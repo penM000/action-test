@@ -1,6 +1,13 @@
 name: Publish Docker image
 on:
+  schedule:
+    - cron: '0 10 * * *'
   push:
+    branches:
+      - main
+      - dev
+    tags:
+      - 'v*.*.*'
 
 jobs:
   docker:
