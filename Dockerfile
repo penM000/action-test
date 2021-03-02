@@ -1,3 +1,3 @@
 FROM ubuntu
-RUN apt 
+RUN apt update
 CMD echo 'Hello world2'
