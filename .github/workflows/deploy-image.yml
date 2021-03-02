@@ -8,6 +8,16 @@ jobs:
     env:
       IMAGE_NAME: helloworld
     steps:
+      - 
+        name: Prepare # 追加
+        id: prep
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+          else
+            TAG="latest"
+          fi
+          echo "::set-output name=tag::${TAG}"
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -37,5 +47,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:dev
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:1.0.0-dev
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}: ${{ steps.prep.outputs.tag }} 
+
